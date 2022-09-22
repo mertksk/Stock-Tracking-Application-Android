@@ -1,7 +1,8 @@
-package com.niyel.mrpound.MainComponents;
+package com.niyel.mrpoundlast;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -13,11 +14,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.niyel.mrpound.R;
-import com.niyel.mrpound.databinding.ActivityMainBinding;
-import com.niyel.mrpound.globalVariables.Order;
-import com.niyel.mrpound.globalVariables.UserDetails;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,16 +40,17 @@ public class OrderListMain extends AppCompatActivity {
         BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationView);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
-         UserDetails userdetails = (UserDetails) getApplicationContext();
-         username = userdetails.getUsername();
-         password = userdetails.getPassword();
-
+        UserDetails userdetails = (UserDetails) getApplicationContext();
+        username = userdetails.getUsername();
+        password = userdetails.getPassword();
         jsonParse();
+
+
 
         // as soon as the application opens the first
         // fragment should be shown to the user
         // in this case it is algorithm fragment
-        getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new CorrectOrders()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new correctOrder()).commit();
 
 
     }
@@ -66,12 +63,13 @@ public class OrderListMain extends AppCompatActivity {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) { //response Holds the data
-                //JSONArray jsonArray =response.getJSONArray("");
+
                 try {
                     int result = response.getInt("Result");
                     if(result==1){
+                        response=response.getJSONObject("ResultData");
                         orders = new ArrayList<Order>();
-                        boolean isManager = response.getBoolean("isManager");
+                         int isManager = response.getInt("isManager");
                         JSONArray jsonArray = response.getJSONArray("Pickings");
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject orderlist = jsonArray.getJSONObject(i);
@@ -89,7 +87,7 @@ public class OrderListMain extends AppCompatActivity {
                             orders.add(new Order(id,name,ScheduledDate,LocationId,LocationName,LocationDestId,LocationDestName,PickingTypeId,PickingTypeName,false));
 
                         }
-                        if(isManager){
+                        if(isManager==1){
                             jsonArray = response.getJSONArray("PickingsToCheck");
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject orderlist = jsonArray.getJSONObject(i);
@@ -114,6 +112,7 @@ public class OrderListMain extends AppCompatActivity {
                     }
                     /*Pickings not found+*/
                     else if(result==-1){
+                        System.out.println("Hata meydana geldi"); //dddd
                         AlertDialog alertDialog = new AlertDialog.Builder(OrderListMain.this).create();
                         alertDialog.setTitle("Bir Hata Meydana Geldi");
                         alertDialog.setMessage("Ürün Listesi Bulunamadı");
@@ -121,7 +120,7 @@ public class OrderListMain extends AppCompatActivity {
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
-                                            dialogInterface.dismiss();
+                                        dialogInterface.dismiss();
                                     }
                                 });
                         alertDialog.show();
@@ -147,16 +146,16 @@ public class OrderListMain extends AppCompatActivity {
         Fragment selectedFragment = null;
         int itemId = item.getItemId();
         if (itemId == R.id.correctOrders) { //else incorrect
-            selectedFragment = new CorrectOrders();
-       /* } else if (itemId == R.id.incorrect) {
-            selectedFragment = new incorrect();*/
+            selectedFragment = new correctOrder();
+        }
+        else if(itemId== R.id.incorrectOrders){
+            selectedFragment=new incorrectOrder();
 
-            // It will help to replace the
-            // one fragment to other.
-            if (selectedFragment != null) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, selectedFragment).commit();
-            }
-
+        }
+        // It will help to replace the
+        // one fragment to other.
+        if (selectedFragment != null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, selectedFragment).commit();
         }
         return true;
     };

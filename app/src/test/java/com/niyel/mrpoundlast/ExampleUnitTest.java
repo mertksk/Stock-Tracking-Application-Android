@@ -1,4 +1,4 @@
-package com.niyel.mrpound;
+package com.niyel.mrpoundlast;
 
 import org.junit.Test;
 

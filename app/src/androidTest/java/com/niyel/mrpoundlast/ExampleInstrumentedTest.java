@@ -1,4 +1,4 @@
-package com.niyel.mrpound;
+package com.niyel.mrpoundlast;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -20,6 +20,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.niyel.mrpound", appContext.getPackageName());
+        assertEquals("com.niyel.mrpoundlast", appContext.getPackageName());
     }
 }

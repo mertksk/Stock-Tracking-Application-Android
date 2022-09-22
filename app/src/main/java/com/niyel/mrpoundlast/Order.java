@@ -1,20 +1,11 @@
-package com.niyel.mrpound.globalVariables;
+package com.niyel.mrpoundlast;
 
-public class Order {
+import java.io.Serializable;
 
-    /**
-     * "Id": "3265856",
-     * "Name": "71/OUT/02903",
-     * "ScheduledDate": "2021-08-24 17:41:08",
-     * "UserId": "",
-     * "UserName": "",
-     * "LocationId": "46",
-     * "LocationName": "Zeytinlik Stock",
-     * "LocationDestId": "9",
-     * "LocationDestName": "Customers",
-     * "PickingTypeId": "39",
-     * "PickingTypeName": "Delivery Orders"
-     */
+public class Order implements Serializable {
+
+
+
     private int Id;
     private String name;
     private String date;

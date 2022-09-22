@@ -1,11 +1,19 @@
-package com.niyel.mrpound.globalVariables;
+package com.niyel.mrpoundlast;
 
 import android.app.Application;
 
 public class UserDetails extends Application {
     private String username;
     private String password;
+    private int OrderId;
 
+    public int getOrderId() {
+        return OrderId;
+    }
+
+    public void setOrderId(int orderId) {
+        OrderId = orderId;
+    }
 
     public String getPassword() {
         return password;
