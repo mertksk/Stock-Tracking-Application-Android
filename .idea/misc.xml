@@ -5,15 +5,22 @@
       <map>
         <entry key="..\:/MrPoundLast/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
         <entry key="..\:/MrPoundLast/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
+        <entry key="..\:/MrPoundLast/app/src/main/res/drawable/list_item_bg_normal.xml" value="0.1" />
+        <entry key="..\:/MrPoundLast/app/src/main/res/drawable/list_item_bg_pressed.xml" value="0.1" />
+        <entry key="..\:/MrPoundLast/app/src/main/res/drawable/list_selector.xml" value="0.1" />
         <entry key="..\:/MrPoundLast/app/src/main/res/layout/activity_incorrect_order_details.xml" value="0.264" />
         <entry key="..\:/MrPoundLast/app/src/main/res/layout/activity_main.xml" value="0.22418478260869565" />
-        <entry key="..\:/MrPoundLast/app/src/main/res/layout/activity_order_details.xml" value="0.24010416666666667" />
-        <entry key="..\:/MrPoundLast/app/src/main/res/layout/activity_order_list.xml" value="0.12360688956433637" />
-        <entry key="..\:/MrPoundLast/app/src/main/res/layout/activity_product_details.xml" value="0.2" />
+        <entry key="..\:/MrPoundLast/app/src/main/res/layout/activity_order_details.xml" value="0.2" />
+        <entry key="..\:/MrPoundLast/app/src/main/res/layout/activity_order_list.xml" value="0.2171875" />
+        <entry key="..\:/MrPoundLast/app/src/main/res/layout/activity_product_details.xml" value="0.1" />
         <entry key="..\:/MrPoundLast/app/src/main/res/layout/fragment_correct_order.xml" value="0.11302083333333333" />
         <entry key="..\:/MrPoundLast/app/src/main/res/layout/fragment_correct_orders.xml" value="0.11302083333333333" />
         <entry key="..\:/MrPoundLast/app/src/main/res/layout/fragment_incorrect_order.xml" value="0.1" />
         <entry key="..\:/MrPoundLast/app/src/main/res/layout/fragment_incorrect_orders.xml" value="0.1" />
+        <entry key="..\:/MrPoundLast/app/src/main/res/layout/layout_amount_dialogue.xml" value="0.264" />
+        <entry key="..\:/MrPoundLast/app/src/main/res/layout/layout_enter_amount_dialogue.xml" value="0.1" />
+        <entry key="..\:/MrPoundLast/app/src/main/res/layout/listview_layout.xml" value="0.176" />
+        <entry key="..\:/MrPoundLast/app/src/main/res/layout/order_details_list_item.xml" value="0.1" />
         <entry key="..\:/MrPoundLast/app/src/main/res/menu/bottom_nav_order_list.xml" value="0.2064814814814815" />
       </map>
     </option>

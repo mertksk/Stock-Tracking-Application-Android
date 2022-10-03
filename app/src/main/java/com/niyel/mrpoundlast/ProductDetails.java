@@ -4,96 +4,63 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class ProductDetails extends AppCompatActivity {
 
-    private ImageButton buttonBack;
-    private ImageButton buttonForward;
     private int index;
     private ArrayList<Product> products;
-    private TextView informationText;
-    private TextView catalogText;
-
-    private ImageButton enterAmountButton;
-    private ImageButton CancelButton;
-
-    private ImageButton barcode;
-
-
-    private LinearLayout productAmountLayout;
-    private LinearLayout cancelFormLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_details);
 
-        informationText = findViewById(R.id.informationText);
-        catalogText = findViewById(R.id.catalogText);
-        catalogText.setEnabled(false);
-
-        barcode= findViewById(R.id.imageButtonSearchBarcode);
-
-        enterAmountButton = findViewById(R.id.ButtonAmount);
-        CancelButton = findViewById(R.id.ButtonCancel);
-
-        productAmountLayout = findViewById(R.id.productAmountLayout);
-        productAmountLayout.setEnabled(false);
-
-        cancelFormLayout = findViewById(R.id.CancelFormLayout);
-        cancelFormLayout.setEnabled(false);
-
-
-        buttonBack = findViewById(R.id.ButtonBack);
-        buttonForward = findViewById(R.id.buttonForward);
-
+        onCreateView();
+        ImageView productImage = findViewById(R.id.productPicture);
+        TextView informationText = findViewById(R.id.informationText);
+        ImageButton enterAmountButton = findViewById(R.id.ButtonAmount);
+    //    ImageButton cancelButton = findViewById(R.id.ButtonCancel);
+        ImageButton buttonBack = findViewById(R.id.ButtonBack);
+        ImageButton buttonForward = findViewById(R.id.buttonForward);
 
         /*Get intent ile productsları ve tıklanan indexi al*/
         Intent recieverIntent = getIntent();
         index =  recieverIntent.getIntExtra("KEY_INDEX",0);
         products = (ArrayList<Product>) recieverIntent.getSerializableExtra("KEY_PRODUCTS");
 
+        Picasso.get().load(products.get(index).getImageURL()).into(productImage);
+        informationText.append("Ürün Adı-> "+products.get(index).getProductName()+"\n"+"Miktar Tipi-> "+products.get(index).getUomName()+"\n"+"Miktar-> "+products.get(index).getProductUomQty()+"\n"+"Başlangıç Konumu-> "+products.get(index).getLocationName()+"\n"+"Varış Konumu-> "+products.get(index).getLocationDestName());
 
 
-        /*Cancel Amount Butonu*/
-        CancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EditText CancelFormText= findViewById(R.id.CancelFormText);
-                products.get(index).setCancelReason(CancelFormText.getText().toString());
-                products.get(index).setProcess(2);
-
-                Intent myIntent = new Intent(ProductDetails.this, OrderDetails.class);
-                myIntent.putExtra("KEY_PRODUCTS",products);
-                startActivity(myIntent);
-
-
-
-
-            }
-        });
 
         /*Enter Amount Butonu*/
         enterAmountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                EditText EnterAmountText = findViewById(R.id.amountText);
+                    products.get(index).setProcess(1);
+                    backToOrderDetails();
+                    products.get(index).setRevisedAmount(Integer.parseInt(EnterAmountText.getText().toString()));
 
-            }
-        });
+
+            }  });
 
         /*Button to go back to Order Details*/
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ProductDetails.this, OrderDetails.class);
-                finish();
-                startActivity(intent);
+                    backToOrderDetails();
             }
         });
 
@@ -106,44 +73,50 @@ public class ProductDetails extends AppCompatActivity {
                 index++;
                 while(index<products.size()){
                     if(products.get(index).getProcess()==0){
+                        System.out.println("Gridi");
                         myIntent.putExtra("KEY_INDEX",index);
                         myIntent.putExtra("KEY_PRODUCTS",products);
+                        finish();
                         startActivity(myIntent);
-                    }
-
-                }
-
-            }
-        });
-
-
-        /*Barcode doğru olması halinde*/
-        barcode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EditText barcodeText= findViewById(R.id.editTextTextAcceptShipmentBarcode);
-
-                for(int i=0;i<products.size();i++){
-                    if(products.get(i).getBarcode()== Integer.parseInt(barcodeText.toString())){
-                        catalogText.setEnabled(true);
-                         productAmountLayout.setEnabled(true);
-                        cancelFormLayout.setEnabled(true);
-                         informationText.append(products.get(i).getProductName()+"\n"+products.get(i).getUomName()+"\n"+products.get(i).getProductUomQty()+"\n"+products.get(i).getLocationName()+"\n"+products.get(i).getLocationDestName());
                         break;
                     }
-                    for(int j=0;j<products.get(i).getBarcodes().size();j++){
-                        if(Integer.parseInt(barcodeText.toString())==products.get(i).getBarcodes().get(j)){
-                            catalogText.setEnabled(true);
-                            productAmountLayout.setEnabled(true);
-                            cancelFormLayout.setEnabled(true);
-                            informationText.append(products.get(i).getProductName()+"\n"+products.get(i).getUomName()+"\n"+products.get(i).getProductUomQty()+"\n"+products.get(i).getLocationName()+"\n"+products.get(i).getLocationDestName());
-                            break;
-
-                        }
-                    }
-                }
-            }
+                }            }
         });
-
     }
+
+    /*Function to return Order Details*/
+    public void backToOrderDetails(){
+        Intent intent = new Intent(ProductDetails.this, OrderDetails.class);
+        finish();
+        intent.putExtra("KEY_PRODUCTS",products);
+        startActivity(intent);
+    }
+
+    public void onCreateView()  {
+
+
+            ArrayList<String> errors = new ArrayList<String>();
+            errors.add("Ürün Bulunamadı");
+            errors.add("Yanlış Adres");
+            errors.add("Barkodsuz Ürün");
+            errors.add("Hasarlı Ürün");
+            errors.add("Yanlış Miktar");
+            errors.add("İnceleme Gerekiyor");
+            errors.add("Diğer");
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, errors);
+            ListView lvData = (ListView) findViewById(R.id.cancelReasonsForm);
+            lvData.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+
+            /*Cancel Form Doldurma*/
+            lvData.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    products.get(index).setProcess(2);
+                    products.get(index).setCancelReason(position+1);
+                    backToOrderDetails();
+
+                }
+            });
+        }
 }

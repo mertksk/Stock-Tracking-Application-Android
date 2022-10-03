@@ -9,7 +9,7 @@ public class Product implements Serializable {
     private int Id;
     private int ProductId;
     private String ProductName;
-    private int Barcode;
+    private long Barcode;
     private String Tracking;
     private int UomId;
     private String UomName;
@@ -19,22 +19,44 @@ public class Product implements Serializable {
     private String LocationName;
     private int LocationDestId;
     private String LocationDestName;
-    private ArrayList<Integer> Barcodes;
+    private ArrayList<Long> Barcodes;
     private int process;  // 0 default ,1 processed , 2 cancelled
-    private String cancelReason;
+    private String ImageURL;
+    private int cancelReason;
+    private int revisedAmount;
 
-    public String getCancelReason() {
+    public int getRevisedAmount() {
+        return revisedAmount;
+    }
+
+    public void setRevisedAmount(int revisedAmount) {
+        this.revisedAmount = revisedAmount;
+    }
+
+    public int getCancelReason() {
         return cancelReason;
     }
 
-    public void setCancelReason(String cancelReason) {
+    public void setCancelReason(int cancelReason) {
         this.cancelReason = cancelReason;
+    }
+
+    public void setBarcode(long barcode) {
+        Barcode = barcode;
+    }
+
+    public String getImageURL() {
+        return ImageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        ImageURL = imageURL;
     }
 
     public Product() {
     }
 
-    public Product(int id, int productId, String productName, int barcode, String tracking, int uomId, String uomName, int productUomQty, int qtyDone, int locationId, String locationName, int locationDestId, String locationDestName, ArrayList<Integer> barcodes) {
+    public Product(int id, int productId, String productName, long barcode, String tracking, int uomId, String uomName, int productUomQty, int qtyDone, int locationId, String locationName, int locationDestId, String locationDestName, ArrayList<Long> barcodes,String ImageURL) {
 
         Id = id;
         ProductId = productId;
@@ -50,9 +72,10 @@ public class Product implements Serializable {
         LocationDestId = locationDestId;
         LocationDestName = locationDestName;
         Barcodes = barcodes;
+        this.ImageURL=  ImageURL;
 
     }
-    public Product(int id, int productId, String productName, int barcode, String tracking, int uomId, String uomName, int productUomQty, int qtyDone, int locationId, String locationName, int locationDestId, String locationDestName, ArrayList<Integer> barcodes,int process) {
+    public Product(int id, int productId, String productName, long barcode, String tracking, int uomId, String uomName, int productUomQty, int qtyDone, int locationId, String locationName, int locationDestId, String locationDestName, ArrayList<Long> barcodes,int process,String ImageURL) {
         Id = id;
         ProductId = productId;
         ProductName = productName;
@@ -68,6 +91,7 @@ public class Product implements Serializable {
         LocationDestName = locationDestName;
         Barcodes = barcodes;
         this.process=process;
+        this.ImageURL=ImageURL;
     }
 
 
@@ -103,7 +127,7 @@ public class Product implements Serializable {
         ProductName = productName;
     }
 
-    public int getBarcode() {
+    public long getBarcode() {
         return Barcode;
     }
 
@@ -184,11 +208,11 @@ public class Product implements Serializable {
         LocationDestName = locationDestName;
     }
 
-    public ArrayList<Integer> getBarcodes() {
+    public ArrayList<Long> getBarcodes() {
         return Barcodes;
     }
 
-    public void setBarcodes(ArrayList<Integer> barcodes) {
+    public void setBarcodes(ArrayList<Long> barcodes) {
         Barcodes = barcodes;
     }
 }

@@ -5,14 +5,14 @@ import android.app.Application;
 public class UserDetails extends Application {
     private String username;
     private String password;
-    private int OrderId;
+    private Order order;
 
-    public int getOrderId() {
-        return OrderId;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setOrderId(int orderId) {
-        OrderId = orderId;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public String getPassword() {

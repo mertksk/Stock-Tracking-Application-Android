@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants">
+
+
+    <TextView
+        android:id="@+id/list_item_text"
+        android:layout_width="310dp"
+        android:layout_height="wrap_content"
+        android:text="This is row number 15" />
+
+    <Button
+        android:id="@+id/list_item_btn"
+        android:layout_width="85dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:background="#FF0026"
+        android:text="İşlem İptal"
+        android:textColor="@color/white"
+
+        />
+
+
+
+</RelativeLayout>

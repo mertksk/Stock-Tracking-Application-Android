@@ -17,16 +17,13 @@
         android:theme="@style/Theme.MrPoundLast"
         tools:targetApi="31" >
         <activity
-            android:name=".IncorrectOrderDetails"
-            android:exported="false" />
-        <activity
             android:name=".ProductDetails"
             android:exported="false" />
         <activity
             android:name=".OrderDetails"
             android:exported="false" />
         <activity
-            android:name=".OrderListMain"
+            android:name=".OrderList"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
